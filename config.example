@@ -1,0 +1,43 @@
+# General settings
+#==================
+IMG_NAME="K3S_raspbian"
+RELEASE="bullseye"
+
+# Build settings
+#==================
+USE_QCOW2=0
+#BASE_QCOW2_SIZE="12G"
+#APT_PROXY="http://localhost:3218"
+#BASE_DIR="$(pwd)""
+#WORK_DIR="$BASE_DIR/work"
+STAGE_LIST="stage0 stage1 stage2"
+
+# Deployment settings
+#==================
+#DEPLOY_DIR="$BASE_DIR/deploy"
+DEPLOY_COMPRESSION="gz"
+COMPRESSION_LEVEL=6
+USE_QEMU=0
+
+
+# Network settings
+#==================
+TARGET_HOSTNAME="k3s-node"
+#WPA_ESSID="openwifi"
+#WPA_PASSWORD="wifipass"
+#WPA_COUNTRY="gb"
+
+# Locale settings
+#==================
+LOCALE_DEFAULT="en_GB.UTF-8"
+KEYBOARD_KEYMAP="gb"
+KEYBOARD_LAYOUT="English (UK)"
+TIMEZONE_DEFAULT="Europe/London"
+
+# User settings
+#==================
+FIRST_USER_NAME="k3s"
+DISABLE_FIRST_BOOT_USER_RENAME=1
+FIRST_USER_PASS="k8stooheavy"
+ENABLE_SSH=1
+PUBKEY_ONLY_SSH=0
