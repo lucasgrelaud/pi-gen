@@ -10,7 +10,7 @@ USE_QCOW2=0
 #APT_PROXY="http://localhost:3218"
 #BASE_DIR="$(pwd)""
 #WORK_DIR="$BASE_DIR/work"
-STAGE_LIST="stage0 stage1 stage2"
+STAGE_LIST="stage0 stage1 stage2 stage-k3s"
 
 # Deployment settings
 #==================
