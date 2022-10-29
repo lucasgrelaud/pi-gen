@@ -22,7 +22,7 @@ USE_QEMU=0
 
 # Network settings
 #==================
-TARGET_HOSTNAME="k3s-node"
+TARGET_HOSTNAME="k3s-node1"
 #WPA_ESSID="openwifi"
 #WPA_PASSWORD="wifipass"
 #WPA_COUNTRY="gb"
@@ -44,9 +44,9 @@ PUBKEY_ONLY_SSH=0
 
 # K3S settings
 #==================
+IS_MASTER=false
+MASTER_HOSTNAME="k3s-master"
+SECRET="ThisIsAnAwesomeSecret"
 CLUSTER_INIT=false
-#CLUSTER_SECRET="ThisIsAnAwesomeSecret"
-#CLUSTER_IS_MASTER=true
-#CLUSTER_MASTER_HOSTNAME="<ip or hostname>"
-#INSTALL_ETCDCTL=true
-#ETCDCTL_VERSION="v3.5.0"
+INSTALL_ETCDCTL=false
+ETCDCTL_VERSION="v3.5.0"
