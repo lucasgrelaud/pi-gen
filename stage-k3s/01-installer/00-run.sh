@@ -8,13 +8,13 @@ EOF
 # Install K3S using the script
 
 if [[ "${CLUSTER_INIT}"  == "true" ]]; then
-    log "Installing K3S in cluster mode"
+    log "Installing K3S in HA w/ embedded DB mode"
     if [[ -z "${SECRET}" ]]; then
         log "No SECRET, aborting k3s installation in cluster mod"
     else
         if [[ "${IS_MASTER}" == "true" ]]; then
             on_chroot << EOF
-                K3S_TOKEN=${SECRET} INSTALL_K3S_SKIP_START=true sh -s /tmp/get-k3s-io.sh server --cluster-init
+                K3S_TOKEN=${SECRET} INSTALL_K3S_SKIP_START=true INSTALL_K3S_SKIP_ENABLE=true /tmp/get-k3s-io.sh server --cluster-init
 EOF
         else
             log "Edit and run script '/root/install-k3s-node.sh' when master is running."
@@ -25,19 +25,20 @@ EOF
                 echo "
                     curl -o /tmp/get-k3s-io.sh https://get.k3s.io/
                     chmod +x /tmp/get-k3s-io.sh
-                    K3S_TOKEN=${SECRET} INSTALL_K3S_SKIP_START=true sh -s /tmp/get-k3s-io.sh server --server https://${MASTER_HOSTNAME}:6443
+                    K3S_URL=https://${MASTER_HOSTNAME}:6443 K3S_TOKEN=${SECRET} /tmp/get-k3s-io.sh server
                 " > /root/install-k3s-node.sh
+                chmod +x /root/install-k3s-node.sh
 EOF
         fi
     fi
 else
-    log "Installing K3S in standalone mode"
+    log "Installing K3S in single-server mode"
     if [[ -z "${SECRET}" ]]; then
         log "No SECRET, aborting k3s installation in cluster mod"
     else
         if [[ "${IS_MASTER}" == "true" ]]; then
             on_chroot << EOF
-                K3S_TOKEN=${SECRET} INSTALL_K3S_SKIP_START=true sh -s /tmp/get-k3s-io.sh 
+                K3S_TOKEN=${SECRET} INSTALL_K3S_SKIP_START=true INSTALL_K3S_SKIP_ENABLE=true /tmp/get-k3s-io.sh 
 EOF
         else
             log "Edit and run script '/root/install-k3s-node.sh' when master is running."
@@ -48,8 +49,9 @@ EOF
                 echo "
                     curl -o /tmp/get-k3s-io.sh https://get.k3s.io/
                     chmod +x /tmp/get-k3s-io.sh
-                    K3S_URL=https://${MASTER_HOSTNAME}:6443 K3S_TOKEN=${SECRET} INSTALL_K3S_SKIP_START=true sh -s /tmp/get-k3s-io.sh server --cluster-init
+                    K3S_URL=https://${MASTER_HOSTNAME}:6443 K3S_TOKEN=${SECRET} /tmp/get-k3s-io.sh agent
                 " > /root/install-k3s-node.sh
+                chmod +x /root/install-k3s-node.sh
 EOF
         fi
     fi
